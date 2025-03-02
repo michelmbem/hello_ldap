@@ -1,0 +1,81 @@
+version: 1
+dn: dc=addy,dc=org
+objectClass: dcObject
+objectClass: organization
+objectClass: top
+dc: addy
+o: example
+
+dn: ou=users,dc=addy,dc=org
+objectClass: organizationalUnit
+objectClass: top
+ou: users
+
+dn: cn=mike,ou=users,dc=addy,dc=org
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: top
+cn: User1
+cn: mike
+displayName: Michel Jordan Mbem
+gidNumber: 1000
+homeDirectory: /home/mike
+sn: Bar1
+uid: mike
+uidNumber: 1000
+userPassword:: bWlrZS4x
+
+dn: cn=toto,ou=users,dc=addy,dc=org
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: shadowAccount
+objectClass: person
+objectClass: top
+cn: toto
+displayName: John Doe
+givenName: John Doe
+sn: John Doe
+uid: toto
+userPassword:: dG90by4x
+
+dn: cn=danny,ou=users,dc=addy,dc=org
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: top
+cn: User2
+cn: danny
+displayName: Innocent Daniel Mbem
+gidNumber: 1001
+homeDirectory: /home/danny
+sn: Bar2
+uid: danny
+uidNumber: 1001
+userPassword:: ZGFubnkuMQ==
+
+dn: ou=groups,dc=addy,dc=org
+objectClass: organizationalUnit
+objectClass: top
+description: User groups
+ou: groups
+
+dn: cn=User,ou=groups,dc=addy,dc=org
+objectClass: posixGroup
+objectClass: top
+cn: User
+description: Simple user
+gidNumber: 1000
+memberUid: mike
+
+dn: cn=Administrator,ou=groups,dc=addy,dc=org
+objectClass: posixGroup
+objectClass: top
+cn: Administrator
+description: Administrative user
+gidNumber: 1001
+memberUid: danny
