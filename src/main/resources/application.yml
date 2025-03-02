@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: Hello LDAP
+  ldap:
+    urls: ldap://localhost:1389
+    base: dc=addy,dc=org
+    username: cn=admin,dc=addy,dc=org
+    password: ldapadm
+
+server:
+  port: 8089
+
+helloldap:
+  security:
+    auth:
+      token:
+        issuer: Hello LDAP
+        secret: Cb6-^=T[FrLN3zn,u%s;eGVQ]SXM5+2_
+        expiration: 864000000
+        audience: localhost

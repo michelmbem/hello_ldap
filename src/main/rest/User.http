@@ -1,0 +1,53 @@
+### GET all users
+GET {{host}}/user
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### GET a user by name
+GET {{host}}/user/danny
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### POST a user
+POST {{host}}/user
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "username": "toto",
+  "displayName": "John Doe",
+  "password": "toto.1",
+  "groups": [
+    {
+      "name": "User"
+    },
+    {
+      "name": "Manager"
+    }
+  ]
+}
+
+### PUT a user
+PUT {{host}}/user/toto
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "displayName": "Kevin Toto",
+  "password": "topolino",
+  "groups": [
+    {
+      "name": "Administrator"
+    },
+    {
+      "name": "User"
+    }
+  ]
+}
+
+### DELETE a user
+DELETE {{host}}/user/toto
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###

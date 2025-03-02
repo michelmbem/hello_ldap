@@ -1,0 +1,11 @@
+### GET all groups
+GET {{host}}/group
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### GET a group by name
+GET {{host}}/group/User
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
