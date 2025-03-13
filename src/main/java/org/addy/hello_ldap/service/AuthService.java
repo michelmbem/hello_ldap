@@ -9,8 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
-
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -20,9 +18,9 @@ public class AuthService {
     private final JwtTokenProvider jwtTokenProvider;
 
     public String authenticate(LoginRequest request) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
+        if (((UserService) userDetailsService).authenticate(request.getUsername(), request.getPassword())) {
+            UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
 
-        if (Objects.equals(userDetails.getPassword(), request.getPassword())) {
             return jwtTokenProvider.generateToken(userDetails.getUsername(),
                     userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList());
         }

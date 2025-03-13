@@ -23,6 +23,10 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final GroupRepository groupRepository;
 
+    public boolean authenticate(String username, String password) {
+        return userRepository.authenticate(username, password);
+    }
+
     public List<User> findAll() {
         return userRepository.findAll().stream().map(this::userWithGroups).toList();
     }

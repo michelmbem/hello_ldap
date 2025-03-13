@@ -23,6 +23,10 @@ public class UserRepository {
     private final LdapTemplate ldapTemplate;
     private final UserAttributesMapper userAttributesMapper;
 
+    public boolean authenticate(String username, String password) {
+        return ldapTemplate.authenticate("ou=users", "uid=" + username, password);
+    }
+
     public List<User> findAll() {
         return ldapTemplate.search(
                 query().base("ou=users").where("objectClass").is("inetOrgPerson"),
