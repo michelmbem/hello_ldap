@@ -30,7 +30,8 @@ public class UserRepository {
 
     public List<User> findAll() {
         return ldapTemplate.search(
-                query().base("ou=users").where("objectClass").is("inetOrgPerson"),
+                query().base("ou=users")
+                        .where("objectClass").is("inetOrgPerson"),
                 userAttributesMapper
         );
     }
