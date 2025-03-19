@@ -2,11 +2,11 @@ package org.addy.hello_ldap.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.addy.hello_ldap.model.Group;
+import org.addy.hello_ldap.model.User;
 import org.addy.hello_ldap.model.request.LoginRequest;
+import org.addy.hello_ldap.model.response.LoginResponse;
 import org.addy.hello_ldap.security.JwtTokenProvider;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -14,17 +14,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService {
 
-    private final UserDetailsService userDetailsService;
+    private final UserService userService;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public String authenticate(LoginRequest request) {
-        if (((UserService) userDetailsService).authenticate(request.getUsername(), request.getPassword())) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
+    public LoginResponse authenticate(LoginRequest request) {
+        if (userService.authenticate(request.username(), request.password())) {
+            User user = userService.findByUsername(request.username());
+            String accessToken = jwtTokenProvider.generateToken(
+                    user.getUsername(),
+                    user.getGroups().stream().map(Group::getName).toList()
+            );
 
-            return jwtTokenProvider.generateToken(userDetails.getUsername(),
-                    userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList());
+            return new LoginResponse(true, accessToken);
         }
 
-        return null;
+        return new LoginResponse(false, null);
     }
 }

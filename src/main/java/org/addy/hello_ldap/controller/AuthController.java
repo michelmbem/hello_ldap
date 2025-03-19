@@ -3,6 +3,7 @@ package org.addy.hello_ldap.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.addy.hello_ldap.model.request.LoginRequest;
+import org.addy.hello_ldap.model.response.LoginResponse;
 import org.addy.hello_ldap.service.AuthService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +19,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("login")
-    public String login(@RequestBody LoginRequest request) {
+    public LoginResponse login(@RequestBody LoginRequest request) {
         return authService.authenticate(request);
     }
 }

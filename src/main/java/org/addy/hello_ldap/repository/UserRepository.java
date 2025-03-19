@@ -37,6 +37,10 @@ public class UserRepository {
         return ldapTemplate.lookup("cn=" + username + ",ou=users", userAttributesMapper);
     }
 
+    public User findByDisplayName(String displayName) {
+        return ldapTemplate.lookup("sn=" + displayName + ",ou=users", userAttributesMapper);
+    }
+
     public void create(User user) {
         var context = new DirContextAdapter(buildDn(user.getUsername()));
         bindAttributes(context, user.getUsername(), user);

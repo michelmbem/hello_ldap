@@ -35,6 +35,10 @@ public class UserService implements UserDetailsService {
         return userWithGroups(userRepository.findByUsername(username));
     }
 
+    public User findByDisplayName(String displayName) {
+        return userWithGroups(userRepository.findByDisplayName(displayName));
+    }
+
     public void create(User user) {
         userRepository.create(user);
         addUserToGroups(user.getUsername(), user);

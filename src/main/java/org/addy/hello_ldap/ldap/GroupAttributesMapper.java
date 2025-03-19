@@ -18,6 +18,6 @@ public class GroupAttributesMapper implements AttributesMapper<Group> {
     public Group mapFromAttributes(Attributes attributes) throws NamingException {
         dumpAttributes(attributes);
 
-        return new Group(attributes.get("cn").get().toString());
+        return new Group(getString(attributes, "cn"));
     }
 }

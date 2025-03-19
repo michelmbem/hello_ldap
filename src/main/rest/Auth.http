@@ -10,10 +10,10 @@ Content-Type: application/json
 > {%
     client.test("Authentication process was successful and a token was returned", () => {
         client.assert(response.status === 200, "Authentication failed");
-        client.assert(!!response.body, "No token was returned");
+        client.assert(!!response.body.accessToken, "No token was returned");
     });
 
-    client.global.set('token', response.body);
+    client.global.set('token', response.body.accessToken);
 %}
 
 ###

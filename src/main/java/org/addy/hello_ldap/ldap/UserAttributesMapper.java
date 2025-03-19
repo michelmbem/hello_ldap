@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.naming.NamingException;
 import javax.naming.directory.Attributes;
 
-import static org.addy.hello_ldap.ldap.LdapUtils.dumpAttributes;
+import static org.addy.hello_ldap.ldap.LdapUtils.*;
 
 @Slf4j
 @Component
@@ -19,9 +19,10 @@ public class UserAttributesMapper implements AttributesMapper<User> {
         dumpAttributes(attributes);
 
         return new User(
-                attributes.get("uid").get().toString(),
-                attributes.get("displayName").get().toString(),
-                new String((byte[]) attributes.get("userPassword").get()),
-                null);
+                getString(attributes, "cn"),
+                getString(attributes, "sn"),
+                getBinaryString(attributes, "userPassword"),
+                null
+        );
     }
 }

@@ -28,14 +28,14 @@ public class JwtTokenProvider {
 
     public String generateToken(String username, List<String> roles) {
         Date now = new Date();
-        Date validity = new Date(now.getTime() + tokenProperties.getExpiration());
+        Date validity = new Date(now.getTime() + tokenProperties.expiration());
 
         return Jwts.builder()
                 .subject(username)
-                .issuer(tokenProperties.getIssuer())
+                .issuer(tokenProperties.issuer())
                 .issuedAt(now)
                 .expiration(validity)
-                .audience().add(tokenProperties.getAudience()).and()
+                .audience().add(tokenProperties.audience()).and()
                 .claims(Jwts.claims().add("roles", roles).build())
                 .signWith(tokenProperties.getSigningKey())
                 .compact();
@@ -54,14 +54,15 @@ public class JwtTokenProvider {
         Claims claims = parseToken(token);
         Date now = new Date();
 
-        return claims.getIssuer().equals(tokenProperties.getIssuer()) &&
+        return claims.getIssuer().equals(tokenProperties.issuer()) &&
                 claims.getIssuedAt().before(now) &&
                 claims.getExpiration().after(now) &&
-                claims.getAudience().containsAll(tokenProperties.getAudience());
+                claims.getAudience().containsAll(tokenProperties.audience());
     }
 
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(parseToken(token).getSubject());
+
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
 

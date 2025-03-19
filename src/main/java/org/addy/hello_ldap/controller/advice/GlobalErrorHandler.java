@@ -89,7 +89,7 @@ public class GlobalErrorHandler {
                 .filter(FieldError.class::isInstance)
                 .map(FieldError.class::cast)
                 .collect(Collectors.toMap(FieldError::getField, error ->
-                        Objects.requireNonNullElse(error.getDefaultMessage(), "")));
+                        Objects.requireNonNullElse(error.getDefaultMessage(), error.toString())));
 
         if (!globalErrors.isEmpty())
             errors.put("*", globalErrors);
