@@ -28,15 +28,15 @@ public class UserService implements UserDetailsService {
     }
 
     public List<User> findAll() {
-        return userRepository.findAll().stream().map(this::userWithGroups).toList();
+        return userRepository.findAll();
+    }
+
+    public List<User> findByDisplayName(String displayName) {
+        return userRepository.findByDisplayName(displayName).stream().map(this::userWithGroups).toList();
     }
 
     public User findByUsername(String username) {
         return userWithGroups(userRepository.findByUsername(username));
-    }
-
-    public User findByDisplayName(String displayName) {
-        return userWithGroups(userRepository.findByDisplayName(displayName));
     }
 
     public void create(User user) {

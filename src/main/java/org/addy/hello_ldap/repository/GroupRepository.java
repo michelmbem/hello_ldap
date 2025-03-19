@@ -24,8 +24,10 @@ public class GroupRepository {
 
     public List<Group> findAll() {
         return ldapTemplate.search(
-                query().base("ou=groups").where("objectClass").is("posixGroup"),
-                groupAttributesMapper);
+                query().base("ou=groups")
+                        .where("objectClass").is("posixGroup"),
+                groupAttributesMapper
+        );
     }
 
     public List<Group> findByUsername(String username) {
@@ -33,7 +35,8 @@ public class GroupRepository {
                 query().base("ou=groups")
                         .where("objectClass").is("posixGroup")
                         .and("memberUid").is(username),
-                groupAttributesMapper);
+                groupAttributesMapper
+        );
     }
 
     public Group findByName(String name) {

@@ -7,6 +7,7 @@ import org.addy.hello_ldap.model.User;
 import org.springframework.ldap.core.DirContextAdapter;
 import org.springframework.ldap.core.DirContextOperations;
 import org.springframework.ldap.core.LdapTemplate;
+import org.springframework.ldap.filter.LikeFilter;
 import org.springframework.ldap.support.LdapNameBuilder;
 import org.springframework.stereotype.Repository;
 
@@ -30,15 +31,20 @@ public class UserRepository {
     public List<User> findAll() {
         return ldapTemplate.search(
                 query().base("ou=users").where("objectClass").is("inetOrgPerson"),
-                userAttributesMapper);
+                userAttributesMapper
+        );
+    }
+
+    public List<User> findByDisplayName(String displayName) {
+        return ldapTemplate.search(
+                "ou=users",
+                new LikeFilter("sn", "*" + displayName + "*").encode(),
+                userAttributesMapper
+        );
     }
 
     public User findByUsername(String username) {
         return ldapTemplate.lookup("cn=" + username + ",ou=users", userAttributesMapper);
-    }
-
-    public User findByDisplayName(String displayName) {
-        return ldapTemplate.lookup("sn=" + displayName + ",ou=users", userAttributesMapper);
     }
 
     public void create(User user) {

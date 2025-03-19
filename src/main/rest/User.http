@@ -3,6 +3,11 @@ GET {{host}}/user
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
+### GET users by display name
+GET {{host}}/user/by-name/mbem
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
 ### GET a user by name
 GET {{host}}/user/danny
 Content-Type: application/json

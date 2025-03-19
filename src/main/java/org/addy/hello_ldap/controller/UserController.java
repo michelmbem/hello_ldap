@@ -27,6 +27,11 @@ public class UserController {
         return userService.findAll();
     }
 
+    @GetMapping("by-name/{displayName}")
+    public List<User> getByDisplayName(@PathVariable String displayName) {
+        return userService.findByDisplayName(displayName);
+    }
+
     @GetMapping("{username}")
     public User getByUsername(@PathVariable String username) {
         return userService.findByUsername(username);
