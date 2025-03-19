@@ -13,7 +13,7 @@ public record AuthTokenProperties(
         long expiration,
         List<String> audience
 ) {
-    public SecretKey getSigningKey() {
+    public SecretKey signingKey() {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
 }

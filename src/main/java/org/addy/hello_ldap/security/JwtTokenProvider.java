@@ -37,7 +37,7 @@ public class JwtTokenProvider {
                 .expiration(validity)
                 .audience().add(tokenProperties.audience()).and()
                 .claims(Jwts.claims().add("roles", roles).build())
-                .signWith(tokenProperties.getSigningKey())
+                .signWith(tokenProperties.signingKey())
                 .compact();
     }
 
@@ -68,7 +68,7 @@ public class JwtTokenProvider {
 
     private Claims parseToken(String token) {
         return Jwts.parser()
-                .verifyWith(tokenProperties.getSigningKey())
+                .verifyWith(tokenProperties.signingKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();

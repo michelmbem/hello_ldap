@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.addy.hello_ldap.model.User;
 import org.addy.hello_ldap.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,7 @@ public class UserController {
         return userService.findByUsername(username);
     }
 
+    @PreAuthorize("hasAuthority('Administrator')")
     @PostMapping
     public ResponseEntity<User> create(@RequestBody User user) {
         userService.create(user);
@@ -42,6 +44,7 @@ public class UserController {
         return ResponseEntity.created(uri).body(user);
     }
 
+    @PreAuthorize("hasAuthority('Administrator')")
     @PutMapping("{username}")
     public ResponseEntity<Void> update(@PathVariable String username, @RequestBody User user) {
         userService.update(username, user);
@@ -49,6 +52,7 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasAuthority('Administrator')")
     @DeleteMapping("{username}")
     public ResponseEntity<Void> delete(
             @PathVariable String username,
